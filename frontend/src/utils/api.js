@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: 'https://ecopilot-backend-q3ls.onrender.com',
 });
 
 api.interceptors.request.use((config) => {
