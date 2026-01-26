@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0B0518;
+  color: #F3F4F6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Manrope', sans-serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Glassmorphism */
+.glass {
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Neon glow */
+.neon-glow {
+  box-shadow: 0 0 15px rgba(0, 255, 148, 0.4);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(to right, #00FF94, #7000FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #150E25;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2D2445;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00FF94;
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 255, 148, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 148, 0.6);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Remove default App centering */
+.App {
+  min-height: 100vh;
+}
+
+@layer base {
+  :root {
+    --background: 11 5 24;
+    --foreground: 243 244 246;
+    --card: 21 14 37;
+    --card-foreground: 255 255 255;
+    --popover: 21 14 37;
+    --popover-foreground: 255 255 255;
+    --primary: 0 255 148;
+    --primary-foreground: 0 0 0;
+    --secondary: 112 0 255;
+    --secondary-foreground: 255 255 255;
+    --muted: 42 36 56;
+    --muted-foreground: 156 163 175;
+    --accent: 31 22 53;
+    --accent-foreground: 0 255 148;
+    --destructive: 255 59 48;
+    --destructive-foreground: 255 255 255;
+    --border: 45 36 69;
+    --input: 45 36 69;
+    --ring: 0 255 148;
+    --radius: 0.75rem;
+  }
+  
+  .dark {
+    --background: 11 5 24;
+    --foreground: 243 244 246;
+  }
+  
+  .light {
+    --background: 255 255 255;
+    --foreground: 0 0 0;
+    --card: 255 255 255;
+    --card-foreground: 0 0 0;
+    --primary: 0 200 100;
+    --secondary: 100 0 200;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
