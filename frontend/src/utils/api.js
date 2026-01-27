@@ -4,8 +4,9 @@ import Cookies from 'js-cookie';
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
+  baseURL: process.env.REACT_APP_BACKEND_URL + "/api",
 });
+
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
