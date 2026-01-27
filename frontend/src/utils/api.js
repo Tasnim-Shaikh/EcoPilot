@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const api = axios.create({
-  baseURL: 'https://ecopilot-backend-q3ls.onrender.com',
+  baseURL: 'http://127.0.0.1:8000/api',
 });
 
 api.interceptors.request.use((config) => {
@@ -48,7 +48,8 @@ api.interceptors.response.use(
 export default api;
 
 export const auth = {
-  signup: (email, password) => api.post('/auth/signup', { email, password }),
+  signup: (email, password) => api.post('/api/auth/signup', { email, password }),
+
   login: (username, password) => {
     const formData = new URLSearchParams();
     formData.append('username', username);
@@ -57,7 +58,8 @@ export const auth = {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
   },
-  getMe: () => api.get('/auth/me'),
+
+  getMe: () => api.get('/api/auth/me'),
 };
 
 export const user = {

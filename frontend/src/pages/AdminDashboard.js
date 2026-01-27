@@ -18,7 +18,7 @@ const AdminDashboard = () => {
     { icon: Shield, label: t('manage_access'), path: '/admin/manage-access', testId: 'manage-access-btn', color: 'primary' },
     { icon: BarChart3, label: t('department_analytics'), path: '/admin/analytics', testId: 'dept-analytics-btn', color: 'secondary' },
     { icon: FileText, label: t('generate_esg_report'), path: '/admin/esg-report', testId: 'esg-report-btn', color: 'primary' },
-    { icon: FileText, label: t('manage_users'), path: '/admin/manage-users', testId: 'manage-users-btn', color: 'secondary' },
+    { icon: FileText, label: "Manage Users", path: '/admin/manage-users', testId: 'manage-users-btn', color: 'secondary' },
   ];
 
   return (

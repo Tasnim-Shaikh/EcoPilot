@@ -79,7 +79,7 @@ const UserDashboard = () => {
               <p className="text-sm text-muted-foreground">{t('eco_points')}</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-primary">{(user?.co2_saved || 0).toFixed(1)}g</p>
+              <p className="text-3xl font-bold text-primary">{(user?.co2_saved || 0).toFixed(2)}g</p>
               <p className="text-sm text-muted-foreground">{t('co2_saved')}</p>
             </div>
           </div>

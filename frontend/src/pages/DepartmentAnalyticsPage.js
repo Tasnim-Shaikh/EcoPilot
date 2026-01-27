@@ -103,8 +103,15 @@ const DepartmentAnalyticsPage = () => {
                       ))}
                     </Pie>
                     <Tooltip
-                      contentStyle={{ background: '#150E25', border: '1px solid #2D2445', borderRadius: '8px' }}
-                    />
+                        contentStyle={{
+                          background: '#150E25',
+                          border: '1px solid #2D2445',
+                          borderRadius: '8px',
+                        }}
+                        itemStyle={{ color: '#ffffff' }}
+                        labelStyle={{ color: '#ffffff' }}
+                      />
+
                   </PieChart>
                 </ResponsiveContainer>
               </div>
