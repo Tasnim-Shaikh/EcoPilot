@@ -42,11 +42,20 @@ api_router = APIRouter(prefix="/api")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 REGION_CARBON_INTENSITY = {
-    "US-CA": 300,   # cleaner grid
+    "US-CAL-CISO": 300,   # cleaner grid
     "FR": 70,       # nuclear-heavy
     "SE": 40,       # hydro/wind
-    "US-EAST": 450, # fossil-heavy
+    "US-NY-NYIS": 450, # fossil-heavy
     "DE": 500       # coal/gas mix
+}
+REGION_MAP = {
+    "US-CA": "US-CAL-CISO",
+    "US-EAST": "US-NY-NYIS",
+    "US-CAL-CISO": "US-CAL-CISO",
+    "US-NY-NYIS": "US-NY-NYIS",
+    "FR": "FR",
+    "DE": "DE",
+    "SE": "SE",
 }
 
 # ==================== MODELS ====================
@@ -92,7 +101,7 @@ class EcoChatRequest(BaseModel):
 class EstimateRequest(BaseModel):
     prompt: str
     model: str
-    region: str = "US-CA"
+    region: str = "US-CAL-CISO"
 
 class EcoChatResponse(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -219,7 +228,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-async def calculate_co2_with_climateq(energy_kwh: float, region: str = "US-CA") -> dict:
+async def calculate_co2_with_climateq(energy_kwh: float, region: str = "US-CAL-CISO") -> dict:
     """Calculate CO2 emissions using ClimateQ API"""
     api_key = os.getenv("CLIMATEQ_API_KEY")
     
@@ -237,12 +246,13 @@ async def calculate_co2_with_climateq(energy_kwh: float, region: str = "US-CA") 
     try:
         # Map regions to ClimateQ activity IDs
         region_activity_map = {
-            "US-CA": "electricity-supply_grid-source_residual_mix",
-            "US-EAST": "electricity-supply_grid-source_residual_mix",
+            "US-CAL-CISO": "electricity-supply_grid-source_residual_mix",
+            "US-NY-NYIS": "electricity-supply_grid-source_residual_mix",
             "FR": "electricity-supply_grid-source_residual_mix",
             "SE": "electricity-supply_grid-source_residual_mix",
             "DE": "electricity-supply_grid-source_residual_mix",
         }
+
         
         activity_id = region_activity_map.get(region, "electricity-supply_grid-source_residual_mix")
         
@@ -307,10 +317,11 @@ async def get_carbon_intensity(region: str) -> float:
         return 400.0  # Default gCO2eq/kWh
     
     try:
+        zone = REGION_MAP.get(region, region)
         async with httpx.AsyncClient() as client:
             response = await client.get(
                 f"https://api.electricitymap.org/v3/carbon-intensity/latest",
-                params={"zone": region},
+                params={"zone": zone},
                 headers={"auth-token": api_key},
                 timeout=10.0
             )
@@ -589,7 +600,7 @@ async def get_user_department_access(current_user: User = Depends(get_current_us
                 "anthropic": [],
                 "gemini": []
             },
-            "allowed_regions": ["US-EAST"],
+            "allowed_regions": ["US-NY-NYIS"],
             "green_mode_enforced": True,
             "token_limit": 5000
         }
@@ -1431,7 +1442,7 @@ async def get_departments(current_user: User = Depends(get_current_user)):
                 },
                 "token_limit": 10000,
                 "green_mode_enforced": False,
-                "allowed_regions": ["US-CA", "US-EAST"]
+                "allowed_regions": ["US-CAL-CISO", "US-NY-NYIS"]
             })
 
     if to_insert:
