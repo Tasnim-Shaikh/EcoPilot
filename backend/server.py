@@ -1341,9 +1341,12 @@ async def get_region_recommendations(current_user: User = Depends(get_current_us
         }
 
     regions = []
+
     for r in results:
         region = r["_id"]
-        carbon_intensity = REGION_CARBON_INTENSITY.get(region, 400)
+
+        # 🔥 REAL-TIME carbon intensity
+        carbon_intensity = await get_carbon_intensity(region)
 
         sustainability_score = round(
             max(0, min(100, (1 - carbon_intensity / 700) * 100)),
@@ -1353,7 +1356,7 @@ async def get_region_recommendations(current_user: User = Depends(get_current_us
         regions.append({
             "code": region,
             "name": region,
-            "avg_carbon_intensity": carbon_intensity,
+            "avg_carbon_intensity": round(carbon_intensity, 2),
             "sustainability_score": sustainability_score
         })
 
