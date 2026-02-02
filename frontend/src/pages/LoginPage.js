@@ -182,16 +182,7 @@ const LoginPage = () => {
               />
             </div>
 
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={() => setShowForgotPassword(true)}
-                className="text-sm text-primary hover:underline"
-                data-testid="forgot-password-btn"
-              >
-                Forgot Password?
-              </button>
-            </div>
+            
 
             <button
               type="submit"

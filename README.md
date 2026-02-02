@@ -94,17 +94,11 @@ pip install -r requirements.txt
 
 ```bash
 cd /app/frontend
-yarn install
+npm install
 ```
 
 3. **Configure API Keys**
    Edit `/app/backend/.env` and add your API keys as shown above.
-
-4. **Restart Services**
-
-```bash
-sudo supervisorctl restart backend frontend
-```
 
 ## Usage
 
@@ -127,7 +121,7 @@ sudo supervisorctl restart backend frontend
 3. Choose region for carbon intensity calculation
 4. Enter your prompt
 5. Toggle Green Mode for optimization (optional)
-6. Click "Send Prompt"
+6. Click "Calculate Impact"
 7. View real-time metrics:
    - CO2 emissions
    - Energy consumption
@@ -181,27 +175,18 @@ sudo supervisorctl restart backend frontend
 
 ### Energy Consumption
 
-```
 Energy (kWh) = Tokens × Energy_Per_Token
-```
-
-Default: 0.0000003 kWh per token
+Default: 0.00001 kWh per token
 
 ### CO2 Emissions
 
-```
 CO2 (grams) = Energy (kWh) × Carbon_Intensity (gCO2/kWh)
-```
-
 Carbon intensity fetched from ElectricityMap API based on selected region.
 
 ### Water Consumption
 
-```
 Water (liters) = Energy (kWh) × Water_Intensity_Factor
-```
-
-Default: 0.0005 liters per kWh
+Default: 0.05 liters per kWh
 
 ### Quality Score
 
@@ -209,8 +194,18 @@ Calculated based on response completeness and coherence (0.0 to 1.0 scale).
 
 ### Eco Points
 
-- Standard mode: Tokens × 0.01
+- CO2 saved = original CO2 − new CO2
 - Green Mode: CO2_Saved × 10
+
+### Model Efficiency Score
+
+- CO2 per token = total CO2 / total tokens
+- Then converted into percentage
+
+### Region sustainability score
+
+- Score = (1 − carbon_intensity / max_value) × 100
+- max_value is the most dirty carbon intensity
 
 ## Troubleshooting
 
