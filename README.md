@@ -105,7 +105,7 @@ npm install
 ### Default Admin Credentials
 
 - Email: `admin@gmail.com`
-- Password: `Admin@2026`
+- Password: `admin123`
 
 ### User Registration
 
